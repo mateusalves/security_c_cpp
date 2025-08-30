@@ -1,4 +1,4 @@
-//gcc -fno-stack-protector -z execstack -no-pie -o ret2libc ret2libc.c
+//gcc -fno-stack-protector -z execstack -no-pie -o sb_overflow sb_overflow.c
 
 /*
 -fno-stack-protector: removes stack canaries.
@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// Find the address of secret() (using objdump -d ./ret2libc | grep secret).
+// Find the address of secret() (using objdump -d ./sb_overflow | grep secret).
 void secret() {
     printf("You have reached the secret function!\n");
 }
@@ -28,6 +28,6 @@ int main() {
     return 0;
 }
 
-// python3 -c 'print("A"*72 + "\x12\x34\x56\x78")' | ./ret2libc
+// python3 -c 'print("A"*72 + "\x12\x34\x56\x78")' | ./sb_overflow
 // (where \x12\x34\x56\x78 is the little-endian address of secret()).
 
